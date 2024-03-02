@@ -1,6 +1,8 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.pico-sdk.overrideAttrs(oldAttrs:
 rec {
+
+# pick sdk in main nixpkg is incomplete 
   pname = "pico-sdk";
   version = "1.5.1";
   src= pkgs.fetchgit {
@@ -8,6 +10,7 @@ rec {
     name ="source";
     branchName = version;
     leaveDotGit = true;
+#build all tinyusb module will break Nix builder .so clone submodule in non-recursive
     postFetch = ''
                         cd $out
                         cat .gitmodules
